@@ -10,11 +10,11 @@ const Header = () => {
       <div className="container header-wrapper">
         <Link href="/">
           <Image
-            src="/assets/icons/logo.svg"
+            src="/icons/Watchlist.svg"
             alt="Watchlist logo"
             width={140}
             height={30}
-            className="h-8 w-auto c"
+            className="h-8 w-auto"
           />
         </Link>
         <nav className="hidden sm:block">

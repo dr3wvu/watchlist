@@ -214,3 +214,15 @@ export const MARKET_DATA_WIDGET_CONFIG = {
     },
   ],
 };
+
+export const INVESTMENT_GOALS = [
+  { label: "Aggresive", value: "Aggressive" },
+  { label: "Growth", value: "Growth" },
+  { label: "Balanced", value: "Balanced" },
+  { label: "Conservative", value: "Conservative" },
+];
+export const RISK_TOLERANCE_OPTIONS = [
+  { label: "High", value: "High" },
+  { label: "Medium", value: "Medium" },
+  { label: "Low", value: "Low" },
+];
