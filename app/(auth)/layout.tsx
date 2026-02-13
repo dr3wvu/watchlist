@@ -9,7 +9,7 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
       <section className="auth-left-section scrollbar-hide-default">
         <Link href="/" className="auth-logo">
           <Image
-            src="/assets/icons/logo.png"
+            src="/icons/Watchlist.svg"
             alt="Watchlist logo"
             width={140}
             height={32}
