@@ -13,16 +13,14 @@ import {
 import { useRouter } from "next/navigation";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import NavItems from "./NavItems";
+import { LogOut } from "lucide-react";
+import { signOut } from "@/lib/actions/auth.actions";
 
-const UserDropdown = () => {
+const UserDropdown = ({ user }: { user: User }) => {
   const router = useRouter();
   const handleSignOut = async () => {
+    await signOut();
     router.push("/sign-in");
-  };
-
-  const user = {
-    name: "Andrew",
-    email: "dr3wvu@gmail.com",
   };
 
   return (
@@ -38,6 +36,11 @@ const UserDropdown = () => {
               {user.name[0]}
             </AvatarFallback>
           </Avatar>
+          <div className="hidden md:flex flex-col items-start">
+            <span className="text-base font-medium text-gray-400">
+              {user.name}
+            </span>
+          </div>
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent>
@@ -58,16 +61,16 @@ const UserDropdown = () => {
           </div>
         </DropdownMenuLabel>
         <DropdownMenuSeparator className="bg-gray-600" />
-        {/* <DropdownMenuItem
+        <DropdownMenuItem
           onClick={handleSignOut}
           className="text-gray-100 text-md font-medium focus:bg-transparent focus:text-yellow-500 transition-colors cursor-pointer"
         >
           <LogOut className="h-4 w-4 mr-2 hidden sm:block" />
           Logout
-        </DropdownMenuItem> */}
+        </DropdownMenuItem>
         <DropdownMenuSeparator className="hidden sm:block bg-gray-600" />
-        <nav className="sm:hidden">
-          <NavItems />
+        <nav>
+          <NavItems stacked={true} />
         </nav>
       </DropdownMenuContent>
     </DropdownMenu>

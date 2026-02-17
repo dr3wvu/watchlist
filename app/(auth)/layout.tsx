@@ -2,8 +2,17 @@ import Header from "@/components/Header";
 import React from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { auth } from "@/lib/betterauth/auth";
+import { headers } from "next/headers";
+import { redirect } from "next/navigation";
 
 const layout = async ({ children }: { children: React.ReactNode }) => {
+  const session = await auth.api.getSession({ headers: await headers() });
+
+  if (session?.user) {
+    redirect("/");
+  }
+
   return (
     <main className="auth-layout">
       <section className="auth-left-section scrollbar-hide-default">
@@ -19,29 +28,14 @@ const layout = async ({ children }: { children: React.ReactNode }) => {
         <div className="pb-6 lg:pb-8 flex-1">{children}</div>
       </section>
 
-      <section className="auth-right-section">
-        <div className="z-10 relative lg:mt-4 lg:mb-16">
-          <div className="auth-blockquote">Watchlist alerts</div>
-          <div className="flex items-center justify-between">
-            <div>
-              <cite className="auth-testimonial-author"> TEST </cite>
-              <p className="max-md:text-xs text-gray-500">Software dev</p>
-            </div>
-            <div className="flex items-center gap-0.5">
-              {[1, 2, 3, 4, 5].map((star) => (
-                <Image
-                  src="/assets/icons/star.svg"
-                  alt="Star"
-                  key={star}
-                  width={20}
-                  height={20}
-                  className="w-5 h-5"
-                />
-              ))}
-            </div>
-          </div>
-        </div>
-        <div className="flex-1 relative">{/* PLACEHOLDER IMG */}</div>
+      <section className="auth-right-section relative hidden lg:block overflow-hidden">
+        <Image
+          src="/market-homepage.png"
+          alt="Dashboard Preview"
+          fill
+          priority
+          className="object-cover object-left"
+        />
       </section>
     </main>
   );

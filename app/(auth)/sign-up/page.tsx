@@ -1,6 +1,6 @@
 "use client";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 
 import { Button } from "@/components/ui/button";
@@ -9,9 +9,12 @@ import SelectField from "@/components/forms/SelectField";
 import { INVESTMENT_GOALS, RISK_TOLERANCE_OPTIONS } from "@/lib/constants";
 import { CountrySelectField } from "@/components/forms/CountrySelectField";
 import FooterLink from "@/components/forms/FooterLink";
+import { signUpWithEmail } from "@/lib/actions/auth.actions";
+import { toast } from "sonner";
 
 const SignUp = () => {
   const router = useRouter();
+  const [submitError, setSubmitError] = useState<string | null>(null);
 
   const {
     register,
@@ -30,11 +33,22 @@ const SignUp = () => {
     mode: "onBlur",
   });
 
-  const onSubmit = async (data: SignInFormData) => {
+  const onSubmit = async (data: SignUpFormData) => {
+    console.log("submit");
+    setSubmitError(null);
     try {
-      console.log(data);
+      const result = await signUpWithEmail(data);
+      if (result?.success) {
+        console.log("success");
+        router.push("/");
+        return;
+      }
+
+      setSubmitError(result?.error ?? "Sign up failed. Please try again.");
     } catch (e) {
       console.log(e);
+      toast.error("Failed to create account");
+      setSubmitError("Sign up failed. Please try again.");
     }
   };
 
@@ -42,10 +56,15 @@ const SignUp = () => {
     <>
       <h1 className="form-title">Sign Up</h1>
 
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <form
+        onSubmit={handleSubmit(onSubmit, (errors) => {
+          console.log("VALIDATION ERRORS:", errors);
+        })}
+        className="space-y-5"
+      >
         <InputField
           name="name"
-          label="full name"
+          label="Full name"
           placeholder="John Smith"
           register={register}
           error={errors.name}
@@ -60,7 +79,10 @@ const SignUp = () => {
           error={errors.email}
           validation={{
             required: "Email is required",
-            pattern: /^\w+@\w+\.w+$/,
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Invalid email address",
+            },
             message: "Email address required",
           }}
         />
@@ -72,7 +94,13 @@ const SignUp = () => {
           type="password"
           register={register}
           error={errors.password}
-          validation={{ required: "Password is required", minLength: 6 }}
+          validation={{
+            required: "Password is required",
+            minLength: {
+              value: 6,
+              message: "Password must be at least 6 characters",
+            },
+          }}
         />
 
         <CountrySelectField
@@ -102,15 +130,18 @@ const SignUp = () => {
           error={errors.riskTolerance}
           required
         />
-      </form>
+        <Button
+          type="submit"
+          disabled={isSubmitting}
+          className="yellow-btn w-full mt-5"
+        >
+          {isSubmitting ? "Creating Account" : "Start Investing"}
+        </Button>
 
-      <Button
-        type="submit"
-        disabled={isSubmitting}
-        className="yellow-btn w-full mt-5"
-      >
-        {isSubmitting ? "Creating Account" : "Start Investing"}
-      </Button>
+        {submitError && (
+          <p className="text-red-500 text-sm text-center">{submitError}</p>
+        )}
+      </form>
 
       <FooterLink
         text="Already have an account?"

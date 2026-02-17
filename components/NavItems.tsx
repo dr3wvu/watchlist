@@ -4,7 +4,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React from "react";
 
-const NavItems = () => {
+const NavItems = ({ stacked = false }) => {
   const pathName = usePathname();
 
   const isActive = (path: string) => {
@@ -16,12 +16,18 @@ const NavItems = () => {
   };
 
   return (
-    <ul className="flex flex-col sm:flex-row p-2 gap-3 sm:gap-10 font-medium">
+    <ul
+      className={`flex p-2 gap-3 font-medium ${
+        stacked ? "flex-col" : "flex-row"
+      }`}
+    >
       {NAV_ITEMS.map(({ href, title }) => (
         <li key={href}>
           <Link
             href={href}
-            className={`hover: text-yellow-500 transition-colors ${isActive(href) ? "text-gray-100" : ""}`}
+            className={`hover:text-yellow-500 transition-colors ${
+              isActive(href) ? "text-gray-100" : ""
+            }`}
           >
             {title}
           </Link>

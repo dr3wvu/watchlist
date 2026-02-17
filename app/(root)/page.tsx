@@ -27,8 +27,7 @@ const Home = () => {
             title="Stock Heatmap"
             scriptUrl={`${scriptUrl}stock-heatmap.js`}
             config={HEATMAP_WIDGET_CONFIG}
-            className="custom-chart"
-            height={600}
+            height={800}
           />
         </div>
       </section>
@@ -45,7 +44,7 @@ const Home = () => {
 
         <div className="h-full md:col-span-1 xl:col-span-2">
           <TradingViewWidget
-            title="Stock Heatmap"
+            title="News"
             scriptUrl={`${scriptUrl}market-quotes.js`}
             config={MARKET_DATA_WIDGET_CONFIG}
             height={600}

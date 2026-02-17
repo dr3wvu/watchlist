@@ -3,9 +3,10 @@ import FooterLink from "@/components/forms/FooterLink";
 import InputField from "@/components/forms/InputField";
 import { Button } from "@/components/ui/button";
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import { signInWithEmail } from "@/lib/actions/auth.actions";
 
 const SignIn = () => {
   const router = useRouter();
@@ -21,21 +22,36 @@ const SignIn = () => {
     mode: "onBlur",
   });
 
+  const [submitError, setSubmitError] = useState<string | undefined>(undefined);
+
   const onSubmit = async (data: SignInFormData) => {
+    setSubmitError(undefined);
     try {
       //
+      const result = await signInWithEmail(data);
+      if (result.success) {
+        router.push("/");
+      }
+      console.log(result);
+      setSubmitError(result.error);
     } catch (e) {
       console.log(e);
       toast.error("Sign in failed", {
         description: e instanceof Error ? e.message : "Failed to sign in",
       });
+      setSubmitError("Sign in failed. Please try again.");
     }
   };
 
   return (
     <>
       <h1 className="form-title">Welcome Back</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="space-y-5">
+      <form
+        onSubmit={handleSubmit(onSubmit, (errors) => {
+          console.log("VALIDATION ERRORS:", errors);
+        })}
+        className="space-y-5"
+      >
         <InputField
           name="email"
           label="Email"
@@ -44,7 +60,10 @@ const SignIn = () => {
           error={errors.email}
           validation={{
             required: "Email is required",
-            pattern: /^\w+@\w+\.w+$/,
+            pattern: {
+              value: /^[^\s@]+@[^\s@]+\.[^\s@]+$/,
+              message: "Invalid email address",
+            },
           }}
         />
 
@@ -52,11 +71,11 @@ const SignIn = () => {
           name="password"
           label="Password"
           placeholder="Enter password"
+          type="password"
           register={register}
           error={errors.password}
           validation={{
             required: "Password is required",
-            minLength: 8,
           }}
         />
 
@@ -67,6 +86,10 @@ const SignIn = () => {
         >
           {isSubmitting ? "Signing In" : "Sign In"}
         </Button>
+
+        {submitError && (
+          <p className="text-red-500 text-sm text-center">{submitError}</p>
+        )}
 
         <FooterLink
           text="Don't have an account?"
