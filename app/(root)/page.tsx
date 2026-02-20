@@ -4,6 +4,7 @@ import {
   HEATMAP_WIDGET_CONFIG,
   MARKET_DATA_WIDGET_CONFIG,
   MARKET_OVERVIEW_WIDGET_CONFIG,
+  TICKER_TAPE_WIDGET_CONFIG,
   TOP_STORIES_WIDGET_CONFIG,
 } from "@/lib/constants";
 
@@ -12,6 +13,16 @@ const Home = () => {
 
   return (
     <div className="flex min-h-screen home-wrapper">
+      <section className="grid w-full gap-8 home-section">
+        <div className="col-span-3">
+          <TradingViewWidget
+            scriptUrl={`${scriptUrl}ticker-tape.js`}
+            config={TICKER_TAPE_WIDGET_CONFIG}
+            height={60}
+          />
+        </div>
+      </section>
+
       <section className="grid w-full gap-8 home-section">
         <div className="md:col-span-1 xl:col-span-1">
           <TradingViewWidget

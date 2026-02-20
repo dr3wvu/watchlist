@@ -13,7 +13,6 @@ export const signUpWithEmail = async ({
   riskTolerance,
 }: SignUpFormData) => {
   try {
-    console.log("sign up hit");
     const res = await auth.api.signUpEmail({
       body: { email, password, name },
     });
@@ -24,7 +23,6 @@ export const signUpWithEmail = async ({
         data: { email, name, country, investmentGoals, riskTolerance },
       });
     }
-    console.log("Success");
 
     return { success: true, data: res };
   } catch (err) {
@@ -47,7 +45,6 @@ export const signOut = async () => {
   try {
     await auth.api.signOut({ headers: await headers() });
   } catch (e) {
-    console.log("Sign out failed", e);
     return { success: false, error: "Sign out failed" };
   }
 };

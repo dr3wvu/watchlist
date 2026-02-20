@@ -4,6 +4,25 @@ export const NAV_ITEMS = [
   { href: "/watchlist", title: "Watchlist" },
 ];
 
+export const TICKER_TAPE_WIDGET_CONFIG = {
+  symbols: [
+    { proName: "FOREXCOM:SPXUSD", title: "S&P 500" },
+    { proName: "FOREXCOM:NSXUSD", title: "Nasdaq 100" },
+    { proName: "FOREXCOM:DJI", title: "Dow Jones" },
+    { proName: "FX:EURUSD", title: "EUR/USD" },
+    { proName: "BITSTAMP:BTCUSD", title: "Bitcoin" },
+    { proName: "BITSTAMP:ETHUSD", title: "Ethereum" },
+    { proName: "AMEX:VOO", title: "VOO" },
+    { proName: "AMEX:VGT", title: "VGT" },
+    { proName: "AMEX:SCHD", title: "SCHD" },
+  ],
+  showSymbolLogo: true,
+  colorTheme: "dark",
+  isTransparent: false,
+  displayMode: "adaptive",
+  locale: "en",
+};
+
 export const MARKET_OVERVIEW_WIDGET_CONFIG = {
   colorTheme: "dark",
   dateRange: "12M",
@@ -16,6 +35,60 @@ export const MARKET_OVERVIEW_WIDGET_CONFIG = {
   belowLineFillColorGrowingBottom: "rgba(41, 98, 255, 0)",
   belowLineFillColorFallingBottom: "rgba(41, 98, 255, 0)",
   tabs: [
+    {
+      title: "Indices",
+      symbols: [
+        {
+          s: "FOREXCOM:SPXUSD",
+          d: "S&P 500 Index",
+        },
+        {
+          s: "FOREXCOM:NSXUSD",
+          d: "US 100 Cash CFD",
+        },
+        {
+          s: "FOREXCOM:DJI",
+          d: "Dow Jones Industrial Average Index",
+        },
+        {
+          s: "INDEX:NKY",
+          d: "Japan 225",
+        },
+        {
+          s: "INDEX:DEU40",
+          d: "DAX Index",
+        },
+        {
+          s: "FOREXCOM:UKXGBP",
+          d: "FTSE 100 Index",
+        },
+      ],
+      originalTitle: "Indices",
+    },
+    {
+      title: "Crypto",
+      symbols: [
+        { s: "CRYPTO:BTCUSD", d: "Bitcoin" },
+        { s: "CRYPTO:ETHUSD", d: "Ethereum" },
+        { s: "CRYPTO:SOLUSD", d: "Solana" },
+        { s: "CRYPTO:ADAUSD", d: "Cardano" },
+      ],
+    },
+    {
+      title: "ETFs",
+      symbols: [
+        { s: "AMEX:VOO", d: "VOO – S&P 500 ETF" },
+        { s: "AMEX:VGT", d: "VGT – Tech ETF" },
+        { s: "AMEX:SCHD", d: "SCHD – Dividend ETF" },
+        {
+          s: "TSX:QQC",
+          d: "QQQ – Nasdaq 100 ETF",
+          logoid: "invesco",
+          "currency-logoid": "country/CA",
+        },
+      ],
+    },
+
     {
       title: "Technology",
       symbols: [
@@ -55,16 +128,15 @@ export const MARKET_OVERVIEW_WIDGET_CONFIG = {
         },
       ],
     },
-
-    {
-      title: "Services",
-      symbols: [
-        { s: "NYSE:BABA", d: "Alibaba Group Hldg Ltd" },
-        { s: "NYSE:T", d: "At&t Inc" },
-        { s: "NYSE:WMT", d: "Walmart" },
-        { s: "NYSE:V", d: "Visa" },
-      ],
-    },
+    // {
+    //   title: "Services",
+    //   symbols: [
+    //     { s: "NYSE:BABA", d: "Alibaba Group Hldg Ltd" },
+    //     { s: "NYSE:T", d: "At&t Inc" },
+    //     { s: "NYSE:WMT", d: "Walmart" },
+    //     { s: "NYSE:V", d: "Visa" },
+    //   ],
+    // },
   ],
   support_host: "https://www.tradingview.com",
   backgroundColor: "#141414",
@@ -226,6 +298,73 @@ export const RISK_TOLERANCE_OPTIONS = [
   { label: "Medium", value: "Medium" },
   { label: "Low", value: "Low" },
 ];
+
+export const SYMBOL_DETAILS_WIDGET_CONFIG = (symbol: string) => ({
+  symbol: symbol.toUpperCase(),
+  width: "100%",
+  height: 180,
+  locale: "en",
+  colorTheme: "dark",
+  isTransparent: true,
+});
+
+export const CANDLE_CHART_WIDGET_CONFIG = (symbol: string) => ({
+  symbol: symbol.toUpperCase(),
+  width: "100%",
+  height: 600,
+  theme: "dark",
+  allow_symbol_change: true,
+  calendar: false,
+  details: false,
+  hide_side_toolbar: true,
+  hide_top_toolbar: false,
+  hide_legend: false,
+  hide_volume: false,
+  hotlist: false,
+  interval: "D",
+  locale: "en",
+  save_image: true,
+  style: 1,
+  backgroundColor: "#141414",
+  gridColor: "#141414",
+  watchlist: [],
+  withdateranges: false,
+  compareSymbols: [],
+  studies: [],
+  autosize: true,
+});
+
+export const TECHNICAL_ANALYSIS_WIDGET_CONFIG = (symbol: string) => ({
+  symbol: symbol.toUpperCase(),
+  colorTheme: "dark",
+  displayMode: "single",
+  isTransparent: false,
+  locale: "en",
+  interval: "1m",
+  disableInterval: false,
+  width: "100%",
+  height: 450,
+  showIntervalTabs: true,
+});
+
+export const COMPANY_FINANCIAL_WIDGET_CONFIG = (symbol: string) => ({
+  symbol: symbol.toUpperCase(),
+  colorTheme: "dark",
+  displayMode: "regular",
+  isTransparent: true,
+  locale: "en",
+  width: "100%",
+  height: 550,
+});
+
+export const COMPANY_PROFILE_WIDGET_CONFIG = (symbol: string) => ({
+  symbol: symbol.toUpperCase(),
+  colorTheme: "dark",
+  isTransparent: true,
+  locale: "en",
+  width: "100%",
+  height: 450,
+});
 
 export const POPULAR_STOCK_SYMBOLS = [
   "AAPL",
